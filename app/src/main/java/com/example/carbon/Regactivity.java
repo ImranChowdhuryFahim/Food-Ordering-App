@@ -2,6 +2,7 @@ package com.example.carbon;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -12,12 +13,19 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Regactivity extends AppCompatActivity implements View.OnClickListener {
     private EditText Fname;
     private EditText Lname;
     private Button Register;
     private RadioButton Male;
     private  RadioButton Female;
+    FirebaseAuth auth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +36,10 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         Register=(Button)findViewById(R.id.reg);
         Male=(RadioButton)findViewById(R.id.male);
         Female=(RadioButton)findViewById(R.id.female);
+        auth=FirebaseAuth.getInstance();
+        user=auth.getCurrentUser();
         Register.setOnClickListener(this);
+
     }
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -38,6 +49,7 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
 
     public void UserRegistration()
     {
+
         if(!isNetworkConnected())
         {
             Toast.makeText(this,"Please Check Your Internet Connection",Toast.LENGTH_SHORT).show();
@@ -53,9 +65,17 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         {
             Gender="Female";
         }
-        Toast.makeText(Regactivity.this,Name+" "+Gender,Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(Regactivity.this, welcomepage.class));
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("user");
+        User u=new User(Name,Gender,user.getPhoneNumber().toString());
+
+       //Toast.makeText(Regactivity.this,u.getGender(),Toast.LENGTH_SHORT).show();
+       myRef.child(user.getUid()).setValue(u);
+      startActivity(new Intent(Regactivity.this, welcomepage.class));
+
     }
+
     @Override
     public void onClick(View v) {
         if(v==Register)
