@@ -13,38 +13,23 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Enter Your Email"
+            android:hint="Enter Your Phone number"
             android:inputType="textEmailAddress">
             </EditText>
 
 
-        <EditText
-            android:id="@+id/pass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="Enter Your password"
-            android:inputType="textPassword">
-            </EditText>
 
         <Button
-            android:id="@+id/reg"
+            android:id="@+id/next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="Register"></Button>
-        <TextView
-            android:layout_margin="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Already have an account? Login here"
-            android:textAlignment="center"
-            android:id="@+id/login">
-        </TextView>
+            android:text="Next"></Button>
+
     </LinearLayout>
 
 </RelativeLayout>

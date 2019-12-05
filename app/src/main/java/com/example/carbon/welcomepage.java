@@ -24,7 +24,7 @@ public class welcomepage extends AppCompatActivity implements View.OnClickListen
         Logout=(Button)findViewById(R.id.logout);
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
-        text.setText("Welcome "+user.getEmail());
+        text.setText("Welcome "+user.getPhoneNumber());
         Logout.setOnClickListener(this);
 
     }

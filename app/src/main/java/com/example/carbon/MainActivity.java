@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,12 +27,10 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button register;
-    private EditText Email;
-    private EditText Pass;
+    private Button Next;
+    private EditText number;
     private FirebaseAuth auth;
     private ProgressDialog dial;
-    private TextView Login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         auth=FirebaseAuth.getInstance();
@@ -42,65 +42,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         dial=new ProgressDialog(this);
         setContentView(R.layout.activity_main);
-        register=(Button) findViewById(R.id.reg);
-        Email=(EditText)findViewById(R.id.email);
-        Pass=(EditText)findViewById(R.id.pass);
-        Login=(TextView)findViewById(R.id.login);
-        register.setOnClickListener(this);
-        Login.setOnClickListener(this);
+        Next=(Button) findViewById(R.id.next);
+        number=(EditText)findViewById(R.id.phone);
+        Next.setOnClickListener(this);
 
 
     }
 
-    public void UserRegistration()
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+    public void next()
     {
-        final String mail=Email.getText().toString().trim();
-        final String pass=Pass.getText().toString().trim();
-        if(TextUtils.isEmpty(mail))
+        final String Num="+88"+number.getText().toString().trim();
+        if(TextUtils.isEmpty(Num))
         {
-            Toast.makeText(this,"Please Enter Email Address",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Please Enter Valid Phone Number",Toast.LENGTH_SHORT).show();
+            return;
         }
-        if(TextUtils.isEmpty(pass))
+        if(!isNetworkConnected())
         {
-            Toast.makeText(this,"Please Enter Password",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Please Check Your Internet Connection",Toast.LENGTH_SHORT).show();
+            return;
         }
-        dial.setMessage("Registerring ..");
-        dial.show();
-        auth.createUserWithEmailAndPassword(mail,pass)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            Toast.makeText(MainActivity.this,"Successfully Registered",Toast.LENGTH_SHORT).show();
-                            dial.dismiss();
-                            auth.signInWithEmailAndPassword(mail,pass)
-                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            if(task.isSuccessful())
-                                            {
-
-                                                //Toast.makeText(Login.this,"Successful Login",Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(MainActivity.this,welcomepage.class));
-                                            }
-                                            else {
-                                                dial.dismiss();
-                                                Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-
-                                            }
-
-                                        }
-                                    });
-
-                        }
-                        else {
-                            Toast.makeText(MainActivity.this,"Failed to Register User", Toast.LENGTH_SHORT).show();
-                            dial.dismiss();
-                        }
-                    }
-
-                });
+        Intent intent=new Intent(MainActivity.this,Login.class);
+        intent.putExtra("pn",Num);
+        startActivity(intent);
 
     }
 
@@ -111,15 +80,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if(v==register)
+        if(v==Next)
         {
-            UserRegistration();
+            next();
 
         }
-        if(v==Login)
-        {
-            UserLogin();
-        }
+
 
     }
 }

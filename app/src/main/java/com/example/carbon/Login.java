@@ -4,66 +4,138 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.LoginFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
+
+import java.util.concurrent.TimeUnit;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
-     private Button login;
-     private EditText Email;
-     private EditText Pass;
+     private Button Next;
+     private EditText pass;
      FirebaseAuth auth;
     private ProgressDialog dial;
+    private String varid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auth=FirebaseAuth.getInstance();
         setContentView(R.layout.activity_login);
-        login=(Button)findViewById(R.id.log);
+        Next=(Button)findViewById(R.id.next);
         dial=new ProgressDialog(this);
-        Email=(EditText)findViewById(R.id.email);
-        Pass=(EditText)findViewById(R.id.pass);
-        login.setOnClickListener(this);
+        pass=(EditText)findViewById(R.id.otp);
+        Next.setOnClickListener(this);
+        next();
     }
-    public void UserLogin()
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+    public void next()
     {
-        dial.show();
-        String mail=Email.getText().toString().trim();
-        String password=Pass.getText().toString().trim();
-        auth.signInWithEmailAndPassword(mail,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        if(!isNetworkConnected())
+        {
+            Toast.makeText(this,"Please Check Your Internet Connection",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String phoneNumber=getIntent().getStringExtra("pn");
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                this,               // Activity (for callback binding)
+                mCallbacks);        // OnVerificationStateChangedCallbacks
+
+    }
+    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks()
+    {
+
+        @Override
+        public void onVerificationCompleted(PhoneAuthCredential credential) {
+
+           // Toast.makeText(Login.this,"sent",Toast.LENGTH_SHORT).show();
+            dial.setMessage("Verifying...");
+            dial.show();
+            signInWithPhoneAuthCredential(credential);
+
+        }
+
+        @Override
+        public void onVerificationFailed(FirebaseException e) {
+
+
+            if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                // Invalid request
+                Toast.makeText(Login.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                // ...
+            } else if (e instanceof FirebaseTooManyRequestsException) {
+                // The SMS quota for the project has been exceeded
+                Toast.makeText(Login.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                // ...
+            }
+
+
+        }
+
+        @Override
+        public void onCodeSent(@NonNull String verificationId,
+                               @NonNull PhoneAuthProvider.ForceResendingToken token) {
+            varid=verificationId;
+            //Toast.makeText(Login.this,"pataisi",Toast.LENGTH_SHORT).show();
+
+        }
+    };
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            dial.dismiss();
-                            //Toast.makeText(Login.this,"Successful Login",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Login.this,welcomepage.class));
-                        }
-                        else {
-                            dial.dismiss();
-                            Toast.makeText(Login.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
 
-                        }
+                            dial.dismiss();
+                            //FirebaseUser user = task.getResult().getUser();
+                            //Toast.makeText(Login.this,"successfull",Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, Regactivity.class));
+                            // ...
+                        } else {
+                            // Sign in failed, display a message and update the UI
 
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                dial.dismiss();
+                                // The verification code entered was invalid
+                                Toast.makeText(Login.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 });
     }
     @Override
     public void onClick(View v) {
-        if(v==login)
-        {
-            UserLogin();
+        if(v==Next)
+            {
+            next();
         }
 
     }
