@@ -24,6 +24,8 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
     private Button Register;
     private RadioButton Male;
     private  RadioButton Female;
+    private EditText Pass;
+    private EditText Cpass;
     FirebaseAuth auth;
     FirebaseUser user;
 
@@ -36,6 +38,8 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         Register=(Button)findViewById(R.id.reg);
         Male=(RadioButton)findViewById(R.id.male);
         Female=(RadioButton)findViewById(R.id.female);
+        Pass=(EditText)findViewById(R.id.pass);
+        Cpass=(EditText)findViewById(R.id.cpass);
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
         Register.setOnClickListener(this);
@@ -65,10 +69,17 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         {
             Gender="Female";
         }
+        String pass=Pass.getText().toString().trim();
+        String cpass=Cpass.getText().toString().trim();
+        if(!pass.equals(cpass))
+        {
+            Toast.makeText(Regactivity.this,"Password didn't match",Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("user");
-        User u=new User(Name,Gender,user.getPhoneNumber().toString());
+        User u=new User(Name,Gender,user.getPhoneNumber(),pass);
 
        //Toast.makeText(Regactivity.this,u.getGender(),Toast.LENGTH_SHORT).show();
        myRef.child(user.getUid()).setValue(u);

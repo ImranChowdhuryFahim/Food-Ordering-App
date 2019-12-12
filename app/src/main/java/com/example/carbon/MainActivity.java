@@ -6,9 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressDialog dial;
     DatabaseReference database;
     ArrayList<String>s;
+    Integer i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         auth=FirebaseAuth.getInstance();
@@ -59,6 +64,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Next=(Button) findViewById(R.id.next);
         number=(EditText)findViewById(R.id.phone);
+        number.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            Color c;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         Next.setOnClickListener(this);
         database=FirebaseDatabase.getInstance().getReference("user");
         database.addValueEventListener(new ValueEventListener() {
@@ -182,6 +204,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
     }
+
+
     @Override
     public void onClick(View v) {
         if(v==Next)
@@ -190,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         }
+
 
 
     }

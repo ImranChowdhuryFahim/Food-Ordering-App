@@ -4,15 +4,17 @@ public class User {
     private String Name;
     private String Gender;
     private String Number;
+    private String Pass;
 
     public  User ()
     {
 
     }
-    public User(String name, String gender, String number) {
+    public User(String name, String gender, String number,String pass) {
         this.Name = name;
         this.Gender = gender;
         this.Number = number;
+        this.Pass=pass;
     }
     public String getGender()
     {
@@ -26,4 +28,5 @@ public class User {
     {
         return Number;
     }
+    public String getPass(){ return  Pass;}
 }

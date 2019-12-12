@@ -56,6 +56,22 @@
             android:text="Female"
             android:id="@+id/female">
         </RadioButton>
+        <EditText
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pass"
+            android:hint="Enter Your Password"
+            android:inputType="textPassword">
+        </EditText>
+        <EditText
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cpass"
+            android:hint="Confirm Your Password"
+            android:inputType="textPassword"
+            ></EditText>
         <Button
             android:id="@+id/reg"
             android:layout_width="match_parent"
