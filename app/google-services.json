@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "501510530456",
+    "firebase_url": "https://carbon-a06cb.firebaseio.com",
+    "project_id": "carbon-a06cb",
+    "storage_bucket": "carbon-a06cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501510530456:android:26d96e79337022c52d37ed",
+        "android_client_info": {
+          "package_name": "com.example.carbon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501510530456-358crds649j13k16qsjs3k097egkc4sb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.carbon",
+            "certificate_hash": "eeacff9f5825bd4c8ebd5548afee067e7587b2e9"
+          }
+        },
+        {
+          "client_id": "501510530456-pr83u5pdo0vbfm0cqqvvb1v12ghf02oa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg7SBTjgqx06PM9_gXEOyNo4dy2Y31Zrs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501510530456-pr83u5pdo0vbfm0cqqvvb1v12ghf02oa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

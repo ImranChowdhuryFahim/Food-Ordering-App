@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FirebaseUser user=auth.getCurrentUser();
         if(user!=null)
         {
-            startActivity(new Intent(this,welcomepage.class));
+            startActivity(new Intent(this,home.class));
         }
         super.onCreate(savedInstanceState);
         dial=new ProgressDialog(this);
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             dial.dismiss();
                             //FirebaseUser user = task.getResult().getUser();
                             //Toast.makeText(Login.this,"successfull",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, welcomepage.class));
+                            startActivity(new Intent(MainActivity.this, home.class));
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
