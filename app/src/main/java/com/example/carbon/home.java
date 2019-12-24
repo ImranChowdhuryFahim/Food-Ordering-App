@@ -1,11 +1,13 @@
 package com.example.carbon;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -72,18 +74,25 @@ public class home extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         View headerView=navigationView.getHeaderView(0);
         text=(TextView)headerView.findViewById(R.id.userphoto);
-        database.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                name=dataSnapshot.child(user.getUid().toString()).child("name").getValue().toString();
-                text.setText(name);
-            }
+        if (getIntent().getBooleanExtra("key", false)) {
+            text.setText("Abdul Moeid");
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+        else {
+            database.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-            }
-        });
+                    name = dataSnapshot.child(user.getUid().toString()).child("name").getValue().toString();
+                    text.setText(name);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
     }
 
@@ -101,5 +110,16 @@ public class home extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            Intent intent = new Intent(home.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true);
+            startActivity(intent);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

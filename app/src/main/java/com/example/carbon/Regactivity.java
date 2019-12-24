@@ -82,8 +82,12 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         User u=new User(Name,Gender,user.getPhoneNumber(),pass);
 
        //Toast.makeText(Regactivity.this,u.getGender(),Toast.LENGTH_SHORT).show();
-       myRef.child(user.getUid()).setValue(u);
-      startActivity(new Intent(Regactivity.this, welcomepage.class));
+        myRef.child(user.getUid()).setValue(u);
+        Intent intent=new Intent(Regactivity.this,home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+      //startActivity(new Intent(Regactivity.this, home.class));
 
     }
 

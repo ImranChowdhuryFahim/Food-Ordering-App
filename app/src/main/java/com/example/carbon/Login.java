@@ -117,7 +117,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             dial.dismiss();
                             //FirebaseUser user = task.getResult().getUser();
                             //Toast.makeText(Login.this,"successfull",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Login.this, Regactivity.class));
+                            Intent intent=new Intent(Login.this,Regactivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            //startActivity(new Intent(Login.this, Regactivity.class));
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI

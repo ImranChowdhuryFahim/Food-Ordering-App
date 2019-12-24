@@ -43,15 +43,19 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button Next;
+    private Button Next,dlogin;
     private EditText number;
     private FirebaseAuth auth;
-    private ProgressDialog dial;
+    private ProgressDialog dial,dial1;
     DatabaseReference database;
     ArrayList<String>s;
     Integer i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+            return;
+        }
         auth=FirebaseAuth.getInstance();
         s=new ArrayList<String>(1000000);
         FirebaseUser user=auth.getCurrentUser();
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dial=new ProgressDialog(this);
         setContentView(R.layout.activity_main);
         Next=(Button) findViewById(R.id.next);
+        dlogin=(Button)findViewById(R.id.dlogin);
         number=(EditText)findViewById(R.id.phone);
         number.addTextChangedListener(new TextWatcher() {
             @Override
@@ -82,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         Next.setOnClickListener(this);
+        dlogin.setOnClickListener(this);
         database=FirebaseDatabase.getInstance().getReference("user");
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -190,7 +196,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             dial.dismiss();
                             //FirebaseUser user = task.getResult().getUser();
                             //Toast.makeText(Login.this,"successfull",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, home.class));
+                            Intent intent=new Intent(MainActivity.this,home.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -213,6 +222,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            next();
 
 
+        }
+        else if(v==dlogin)
+        {
+            Intent intent=new Intent(MainActivity.this,home.class);
+            intent.putExtra("key",true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
 
 
