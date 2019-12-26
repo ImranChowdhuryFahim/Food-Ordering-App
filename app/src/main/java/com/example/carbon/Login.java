@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.LoginFilter;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +37,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
      private EditText pass;
      FirebaseAuth auth;
     private ProgressDialog dial;
-    private String varid;
+    private static String verid=null;
+    int flag=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,30 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Next=(Button)findViewById(R.id.next);
         dial=new ProgressDialog(this);
         pass=(EditText)findViewById(R.id.otp);
+        pass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(count==6)
+                {
+                    Next.setBackgroundColor(Color.GREEN);
+                }
+                else
+                {
+                    Next.setBackgroundColor(R.drawable.common_google_signin_btn_text_light_normal_background);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         Next.setOnClickListener(this);
         next();
     }
@@ -53,6 +81,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
     public void next()
     {
+
+        if(flag==1)
+        {
+            if(pass.getText().length()>=1)
+            {
+                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verid, pass.getText().toString());
+                signInWithPhoneAuthCredential(credential);
+            }
+        }
+
+        flag=1;
         if(!isNetworkConnected())
         {
             Toast.makeText(this,"Please Check Your Internet Connection",Toast.LENGTH_SHORT).show();
@@ -101,7 +140,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         public void onCodeSent(@NonNull String verificationId,
                                @NonNull PhoneAuthProvider.ForceResendingToken token) {
-            varid=verificationId;
+            verid=verificationId;
+
             //Toast.makeText(Login.this,"pataisi",Toast.LENGTH_SHORT).show();
 
         }

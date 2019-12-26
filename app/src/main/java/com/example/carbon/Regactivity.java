@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,12 +73,17 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         }
         String pass=Pass.getText().toString().trim();
         String cpass=Cpass.getText().toString().trim();
+        if(TextUtils.isEmpty(pass))
+        {
+            Toast.makeText(Regactivity.this,"Please Enter a password",Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(!pass.equals(cpass))
         {
             Toast.makeText(Regactivity.this,"Password didn't match",Toast.LENGTH_SHORT).show();
             return;
         }
-
+        Register.setBackgroundColor(Color.GREEN);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("user");
         User u=new User(Name,Gender,user.getPhoneNumber(),pass);

@@ -55,6 +55,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    String varicode;
     private Button Next,dlogin;
     private EditText number;
     private FirebaseAuth auth;
@@ -95,7 +96,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     Next.setBackgroundColor(Color.GREEN);
                 }
-
+                else {
+                    Next.setBackgroundColor(R.drawable.common_google_signin_btn_text_light_normal_background);
+                }
 
             }
 
@@ -211,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onCodeSent(@NonNull String verificationId,
                                @NonNull PhoneAuthProvider.ForceResendingToken token) {
-            String varid=verificationId;
+            varicode=verificationId;
             //Toast.makeText(Login.this,"pataisi",Toast.LENGTH_SHORT).show();
 
         }
