@@ -2,14 +2,23 @@ package com.example.carbon;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PatternMatcher;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -39,8 +48,11 @@ import org.xml.sax.DTDHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button Next,dlogin;
@@ -49,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressDialog dial,dial1;
     DatabaseReference database;
     ArrayList<String>s;
+    String Num;
     Integer i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +91,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Color c;
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(count>=11)
+                {
+                    Next.setBackgroundColor(Color.GREEN);
+                }
+
 
             }
 
@@ -118,16 +136,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void next()
     {
 
-        final String Num="+88"+number.getText().toString().trim();
-        if(TextUtils.isEmpty(Num))
+
+        Num=number.getText().toString().trim();
+        int len=number.getText().length();
+        Pattern pattern=Pattern.compile("^([0][1]|[+][8][8][0][1])([3-9]{1}[0-9]{8})");
+        Matcher matcher=pattern.matcher(number.getText().toString());
+        if(TextUtils.isEmpty(number.getText().toString()))
         {
-            Toast.makeText(this,"Please Enter Valid Phone Number",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Please Enter Your Phone Number",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!matcher.find())
+        {
+            Toast.makeText(this,"Please Enter a valid Phone Number",Toast.LENGTH_SHORT).show();
             return;
         }
         if(!isNetworkConnected())
         {
             Toast.makeText(this,"Please Check Your Internet Connection",Toast.LENGTH_SHORT).show();
             return;
+        }
+        if(Num.length()==11)
+        {
+            Num="+88"+Num;
         }
 
         if(s.contains(Num))
@@ -230,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+
         }
 
 

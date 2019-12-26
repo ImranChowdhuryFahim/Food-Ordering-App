@@ -8,17 +8,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerVertical="true">
-        <TextView
+
+        <EditText
+            android:id="@+id/food"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello world"
-            android:id="@+id/h">
-        </TextView>
+            android:hint="Enter Food Name"></EditText>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Next"
-            android:id="@+id/hr"></Button>
+            android:text="Order"
+            android:id="@+id/order"></Button>
     </LinearLayout>
     <TextView
         android:id="@+id/text_gallery"
