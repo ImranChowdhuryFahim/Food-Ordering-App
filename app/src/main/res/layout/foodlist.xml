@@ -2,53 +2,63 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
-    app:cardBackgroundColor="@color/colorPrimaryDark"
+    app:cardBackgroundColor="#ffffff"
     android:clickable="true"
-    app:cardCornerRadius="5dp"
-    android:scrollbars="vertical"
-    >
+    android:layout_margin="8dp"
+    app:cardElevation="4dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/foodname"
-            android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp">
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:padding="3dp"
-            android:text="@string/name"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            android:layout_weight="9"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/price"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/foodname"
-            android:layout_margin="5dp"
-            android:padding="3dp"
-            android:text="@string/price"
-            android:textColor="#000000"
-            android:textSize="20sp" />
 
-        <Button
+            <TextView
+                android:id="@+id/foodname"
+                android:text="Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical|start"
+                android:textStyle="bold"/>
+
+
+            <TextView
+                android:id="@+id/price"
+                android:text="Price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical|start"
+                android:textStyle="italic"/>
+
+            <Button
             android:id="@+id/cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="50dp"
-            android:background="#ffffff"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:background="#ABF3BA"
             android:text="Add Cart" />
+        </LinearLayout>
 
 
-    </RelativeLayout>
+
+
+
+
+
+
+    </LinearLayout>
 
 
 

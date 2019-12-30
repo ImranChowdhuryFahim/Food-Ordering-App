@@ -52,6 +52,7 @@ public class home extends AppCompatActivity {
     TextView text;
     CounterFab fab;
     Database mydb;
+    public static int close=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         auth=FirebaseAuth.getInstance();
@@ -145,13 +146,12 @@ public class home extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK ) {
-            Intent intent = new Intent(home.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("EXIT", true);
-            startActivity(intent);
-        }
-        return super.onKeyDown(keyCode, event);
+    public void onBackPressed() {
+//        Intent intent = new Intent(home.this, MainActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.putExtra("EXIT", 1);
+//        startActivity(intent);
+        close=1;
+        super.onBackPressed();
     }
 }

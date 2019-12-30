@@ -271,4 +271,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    protected void onPostResume() {
+        if (home.close == 1)
+        {
+            home.close=0;
+            finish();
+            super.onBackPressed();
+        }
+
+        super.onPostResume();
+    }
 }
