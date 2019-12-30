@@ -4,24 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserLogin">
+    tools:context=".UserLogin"
+    android:background="@drawable/bg">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="false"
         android:orientation="vertical">
         <EditText
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Your Password"
+            android:textColorHint="#ffffff"
             android:inputType="textPassword"
             android:layout_margin="15dp"
-            android:id="@+id/pass"></EditText>
+            android:id="@+id/pass"
+            android:shadowColor="@color/colorPrimaryDark"
+            ></EditText>
+
         <Button
+            android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/fui_bgGoogle"
             android:text="Login"
-            android:id="@+id/login"
-            ></Button>
+            android:layout_margin="10dp"></Button>
     </LinearLayout>
 </RelativeLayout>

@@ -1,44 +1,75 @@
 package com.example.carbon;
 
+import com.example.carbon.Model.cart;
+
+import java.util.List;
+
 public class orderFormat {
 
-    private String order_key;
-    private String order_status;
-    private String order_msg;
+    private String key;
+    private String phoneNumber;
+    private String Adress;
+    private String Total;
+    private List<cart> Cart;
+    private String status;
 
-    public orderFormat()
-    {
-
+    public orderFormat() {
     }
 
-    public orderFormat(String order_key,String order_status,String order_msg)
-    {
-        this.order_key=order_key;
-        this.order_status=order_status;
-        this.order_msg=order_msg;
+    public orderFormat(String key, String phoneNumber, String adress, String total, List<cart> cart, String status) {
+        this.key = key;
+        this.phoneNumber = phoneNumber;
+        Adress = adress;
+        Total = total;
+        Cart = cart;
+        this.status = status;
     }
 
-    public String getOrder_key() {
-        return order_key;
+    public String getKey() {
+        return key;
     }
 
-    public void setOrder_key(String order_key) {
-        this.order_key = order_key;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public String getOrder_status() {
-        return order_status;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setOrder_status(String order_status) {
-        this.order_status = order_status;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getOrder_msg() {
-        return order_msg;
+    public String getAdress() {
+        return Adress;
     }
 
-    public void setOrder_msg(String order_msg) {
-        this.order_msg = order_msg;
+    public void setAdress(String adress) {
+        Adress = adress;
+    }
+
+    public String getTotal() {
+        return Total;
+    }
+
+    public void setTotal(String total) {
+        Total = total;
+    }
+
+    public List<cart> getCart() {
+        return Cart;
+    }
+
+    public void setCart(List<cart> cart) {
+        Cart = cart;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

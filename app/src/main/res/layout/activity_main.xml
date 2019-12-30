@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/bg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,16 +17,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Direct login"
-            android:id="@+id/dlogin">
+            android:id="@+id/dlogin"
+            android:background="@color/fui_bgGoogle"
+            android:layout_margin="10dp"
+            >
         </Button>
 
         <EditText
+            android:textSize="20sp"
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="Enter Your Phone number"
-            android:inputType="textEmailAddress">
+            android:inputType="textEmailAddress"
+            android:textColorHint="#ffffff">
 
         </EditText>
 
@@ -34,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="Next"></Button>
+            android:text="Next"
+            android:background="@color/fui_bgGoogle"></Button>
 
     </LinearLayout>
 

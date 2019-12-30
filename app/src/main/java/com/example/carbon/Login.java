@@ -61,7 +61,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 }
                 else
                 {
-                    Next.setBackgroundColor(R.drawable.common_google_signin_btn_text_light_normal_background);
+                    Next.setBackgroundColor(getResources().getColor(R.color.fui_bgGoogle));
                 }
 
             }

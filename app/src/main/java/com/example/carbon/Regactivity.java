@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +45,29 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         Female=(RadioButton)findViewById(R.id.female);
         Pass=(EditText)findViewById(R.id.pass);
         Cpass=(EditText)findViewById(R.id.cpass);
+        Cpass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(TextUtils.isEmpty(Pass.getText()) && (Pass.getText()==Cpass.getText()) )
+                {
+                    Register.setBackgroundColor(Color.GREEN);
+                }
+                else {
+                    Register.setBackgroundColor(getResources().getColor(R.color.fui_bgGoogle));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
         Register.setOnClickListener(this);

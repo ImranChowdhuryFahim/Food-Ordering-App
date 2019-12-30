@@ -21,12 +21,15 @@
 
     <include layout="@layout/content_home" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <com.andremion.counterfab.CounterFab
+        android:id="@+id/counter_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+        app:badgeBackgroundColor="@color/fui_bgEmail"
         android:src="@drawable/ic_shopping_cart_black_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
