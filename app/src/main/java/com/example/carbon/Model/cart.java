@@ -1,6 +1,7 @@
 package com.example.carbon.Model;
 
 public class cart {
+    public int id;
     private String Catagory;
     private String Name;
     private String Price;
@@ -10,10 +11,27 @@ public class cart {
     }
 
     public cart(String catagory, String name, String price, String quantity) {
+
         Catagory = catagory;
         Name = name;
         Price = price;
         Quantity = quantity;
+    }
+
+    public cart(int id, String catagory, String name, String price, String quantity) {
+        this.id = id;
+        Catagory = catagory;
+        Name = name;
+        Price = price;
+        Quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCatagory() {

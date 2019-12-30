@@ -7,11 +7,12 @@
     android:padding="16dp"
     android:background="@drawable/bg"
     tools:context=".Cart">
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listcart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listcart">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="100dp"

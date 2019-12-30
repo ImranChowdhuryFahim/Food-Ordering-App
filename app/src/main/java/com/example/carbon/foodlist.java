@@ -6,14 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.andremion.counterfab.CounterFab;
 import com.example.carbon.Database.Database;
 import com.example.carbon.Model.cart;
 import com.example.carbon.Model.food;
@@ -32,23 +35,31 @@ public class foodlist extends AppCompatActivity {
     DatabaseReference reference;
     String type = null;
     Database mydb;
-
+    androidx.appcompat.widget.Toolbar toolbar;
+    Window window;
+    CounterFab fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mydb=new Database(this);
+        window=getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+
         setContentView(R.layout.activity_foodlist);
-        ActionBar actionBar=getSupportActionBar();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ActionBar actionBar=getSupportActionBar();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //type = b.getString("key");
         //init data base
-
+        toolbar= (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        fab=(CounterFab)toolbar.findViewById(R.id.fab);
         Bundle b = getIntent().getExtras();
         if(b!=null){
             String val = b.getString("key");
             //Log.d("tag",val);
             type = val;
-            actionBar.setTitle(type+" "+"Items");
+            getSupportActionBar().setTitle(type+" "+"Items");
         }
         database = FirebaseDatabase.getInstance();
         reference= database.getReference(type);
@@ -58,6 +69,13 @@ public class foodlist extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recycle.setLayoutManager(layoutManager);
         showlist();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(),Cart.class));
+            }
+        });
+        fab.setCount(mydb.numberOfRows());
     }
 
     private void showlist() {
@@ -80,6 +98,7 @@ public class foodlist extends AppCompatActivity {
                                   food.getPrice(),
                                  "1"
                         ));
+                        fab.setCount(mydb.numberOfRows());
                         Toast.makeText(foodlist.this,"Added to Cart",Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -98,4 +117,6 @@ public class foodlist extends AppCompatActivity {
         recycle.setAdapter(adapter);
 
     }
+
+
 }

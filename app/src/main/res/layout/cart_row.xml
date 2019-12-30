@@ -36,7 +36,20 @@
                 android:textStyle="italic"
                 android:text="10,000"></TextView>
 
+
          </LinearLayout>
+
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            app:initialNumber="1"
+            android:id="@+id/numbtn"
+            >
+
+        </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

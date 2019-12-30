@@ -35,7 +35,7 @@ public class Cart extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     FirebaseDatabase database;
     DatabaseReference databaseReference;
-    TextView Total;
+    public TextView Total;
     Button Order;
     List<cart> Cart=new ArrayList<>();
     CartAdapter adapter;
@@ -105,7 +105,7 @@ public class Cart extends AppCompatActivity {
         int t=0;
         for(cart a:Cart) {
             g = a.getPrice().split("T");
-            t += Integer.parseInt(g[0]);
+            t += (Integer.parseInt(g[0]))*(Integer.parseInt(a.getQuantity()));
         }
         Total.setText(String.valueOf(t)+"Tk");
     }

@@ -66,10 +66,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Integer i=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (getIntent().getBooleanExtra("EXIT", false)) {
-            finish();
-            return;
-        }
         auth=FirebaseAuth.getInstance();
         s=new ArrayList<String>(1000000);
         FirebaseUser user=auth.getCurrentUser();

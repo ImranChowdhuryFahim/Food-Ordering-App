@@ -54,14 +54,15 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String[] select = {"Catagory", "Name", "Price", "Quantity"};
+        String[] select = {"id","Catagory", "Name", "Price", "Quantity"};
         String table = "cart";
         qb.setTables(table);
         Cursor c = qb.query(db, select, null, null, null, null, null);
         final List<cart> result = new ArrayList<>();
         if (c.moveToFirst()) {
             do {
-                result.add(new cart(c.getString(c.getColumnIndex("Catagory")),
+                result.add(new cart(c.getInt(c.getColumnIndex("id")),
+                        c.getString(c.getColumnIndex("Catagory")),
                         c.getString(c.getColumnIndex("Name")),
                         c.getString(c.getColumnIndex("Price")),
                         c.getString(c.getColumnIndex("Quantity"))
@@ -95,6 +96,15 @@ public class Database extends SQLiteOpenHelper {
 //        db.execSQL(query);
     }
 
+    public void updateCart(cart Cart)
+    {
+
+        SQLiteDatabase db=getWritableDatabase();
+        String query=String.format("UPDATE cart SET Quantity=%s WHERE id=%s",Cart.getQuantity(),Cart.getId());
+        db.execSQL(query);
+
+
+    }
     public void cleanCart()
     {
         SQLiteDatabase db=getWritableDatabase();

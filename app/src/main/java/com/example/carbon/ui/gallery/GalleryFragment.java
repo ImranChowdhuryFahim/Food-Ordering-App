@@ -89,7 +89,7 @@ public class GalleryFragment extends Fragment {
     }
     public void loadCart() {
         Cart=new Database(getContext()).getCarts();
-        adapter=new CartAdapter(Cart,getContext());
+        adapter=new CartAdapter(Cart, (com.example.carbon.Cart) getContext());
         recyclerView.setAdapter(adapter);
     }
 }
