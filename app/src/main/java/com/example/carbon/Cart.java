@@ -43,6 +43,7 @@ public class Cart extends AppCompatActivity {
     String total=null;
     private FirebaseUser user;
     private FirebaseAuth auth;
+    Database mydb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,33 +66,38 @@ public class Cart extends AppCompatActivity {
         Order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this);
-                builder.setTitle("One more step");
-                builder.setIcon(R.drawable.ic_shopping_cart_black_24dp);
-                builder.setMessage("Enter Your Location");
-                final EditText adress=new EditText(Cart.this);
-                LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT
-                );
-                adress.setLayoutParams(layoutParams);
-                builder.setView(adress);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String k=String.valueOf(System.currentTimeMillis());
-                                orderFormat ord=new orderFormat(k,user.getPhoneNumber().toString(),adress.getText().toString(),Total.getText().toString(),Cart,"1");
-                                databaseReference.child(k).setValue(ord);
-                                new Database(getApplicationContext()).cleanCart();
-                                Toasty.success(Cart.this, "Your Order Have been Placed",
-                                        Toast.LENGTH_SHORT, true).show();
-                                //Toast.makeText(getBaseContext(),"Your Order Have been Placed",Toast.LENGTH_SHORT).show();
-                                loadCart();
-                            }
-                        });
-                builder.create();
-                builder.show();
+                if (mydb!=null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this);
+                    builder.setTitle("One more step");
+                    builder.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+                    builder.setMessage("Enter Your Location");
+                    final EditText adress = new EditText(Cart.this);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT
+                    );
+                    adress.setLayoutParams(layoutParams);
+                    builder.setView(adress);
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String k = String.valueOf(System.currentTimeMillis());
+                            orderFormat ord = new orderFormat(k, user.getPhoneNumber().toString(), adress.getText().toString(), Total.getText().toString(), Cart, "1");
+                            databaseReference.child(k).setValue(ord);
+                            new Database(getApplicationContext()).cleanCart();
+                            Toasty.success(Cart.this, "Your Order Have been Placed",
+                                    Toast.LENGTH_SHORT, true).show();
+                            //Toast.makeText(getBaseContext(),"Your Order Have been Placed",Toast.LENGTH_SHORT).show();
+                            loadCart();
+                        }
+                    });
+                    builder.create();
+                    builder.show();
 
+                }
+                else {
+                    Toasty.warning(Cart.this,"There is no food to order",Toast.LENGTH_SHORT,true).show();
+                }
             }
         });
 
