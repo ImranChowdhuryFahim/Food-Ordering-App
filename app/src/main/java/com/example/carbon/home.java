@@ -101,12 +101,7 @@ public class home extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         View headerView=navigationView.getHeaderView(0);
         text=(TextView)headerView.findViewById(R.id.userphoto);
-        if (getIntent().getBooleanExtra("key", false)) {
-            text.setText("Abdul Moeid");
-
-        }
-        else {
-            database.addValueEventListener(new ValueEventListener() {
+        database.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -119,7 +114,7 @@ public class home extends AppCompatActivity {
 
                 }
             });
-        }
+
 
     }
 

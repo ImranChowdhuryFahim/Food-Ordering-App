@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<String>s;
     String Num;
     Integer i=0;
+    public Integer flag1=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         auth=FirebaseAuth.getInstance();
@@ -75,26 +76,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         super.onCreate(savedInstanceState);
         dial=new ProgressDialog(this);
-        setContentView(R.layout.activity_main);
-        Next=(Button) findViewById(R.id.next);
-        dlogin=(Button)findViewById(R.id.dlogin);
-        number=(EditText)findViewById(R.id.phone);
-        number.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                setContentView(R.layout.activity_main);
+                Next=(Button) findViewById(R.id.next);
+                number=(EditText)findViewById(R.id.phone);
+                number.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+                    }
 
-            Color c;
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count>=11)
-                {
-                    Next.setBackgroundColor(Color.GREEN);
-                }
-                else {
-                    Next.setBackgroundColor(getResources().getColor(R.color.fui_bgGoogle));
-                }
+                    Color c;
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if(count>=11)
+                        {
+                            Next.setBackgroundColor(Color.GREEN);
+                        }
+                        else {
+                            Next.setBackgroundColor(getResources().getColor(R.color.fui_bgGoogle));
+                        }
 
             }
 
@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         Next.setOnClickListener(this);
-        dlogin.setOnClickListener(this);
         database=FirebaseDatabase.getInstance().getReference("user");
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -159,91 +158,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             Num="+88"+Num;
         }
-
         if(s.contains(Num))
         {
-            //Toast.makeText(MainActivity.this,"he",Toast.LENGTH_SHORT).show();
-            PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                    Num,        // Phone number to verify
-                    60,                 // Timeout duration
-                    TimeUnit.SECONDS,   // Unit of timeout
-                    this,               // Activity (for callback binding)
-                    mCallbacks);
-            return;
+            flag1=123;
         }
 
         Intent intent=new Intent(MainActivity.this,Login.class);
         intent.putExtra("pn",Num);
+        intent.putExtra("rs",String.valueOf(flag1));
         startActivity(intent);
 
     }
-    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks()
-    {
-
-        @Override
-        public void onVerificationCompleted(PhoneAuthCredential credential) {
-
-            // Toast.makeText(Login.this,"sent",Toast.LENGTH_SHORT).show();
-            dial.setMessage("Verifying...");
-            dial.show();
-            signInWithPhoneAuthCredential(credential);
-
-        }
-
-        @Override
-        public void onVerificationFailed(FirebaseException e) {
-
-
-            if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                // Invalid request
-                Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                // ...
-            } else if (e instanceof FirebaseTooManyRequestsException) {
-                // The SMS quota for the project has been exceeded
-                Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                // ...
-            }
-
-
-        }
-
-        @Override
-        public void onCodeSent(@NonNull String verificationId,
-                               @NonNull PhoneAuthProvider.ForceResendingToken token) {
-            varicode=verificationId;
-            //Toast.makeText(Login.this,"pataisi",Toast.LENGTH_SHORT).show();
-
-        }
-    };
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-
-                            dial.dismiss();
-                            //FirebaseUser user = task.getResult().getUser();
-                            //Toast.makeText(Login.this,"successfull",Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(MainActivity.this,home.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            // ...
-                        } else {
-                            // Sign in failed, display a message and update the UI
-
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                dial.dismiss();
-                                // The verification code entered was invalid
-                                Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -253,15 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         }
-        else if(v==dlogin)
-        {
-            Intent intent=new Intent(MainActivity.this,home.class);
-            intent.putExtra("key",true);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
 
-        }
 
 
 

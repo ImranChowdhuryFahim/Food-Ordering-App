@@ -40,7 +40,7 @@ public class GalleryFragment extends Fragment {
     DatabaseReference databaseReference;
     TextView Total;
     Button Order;
-    List<cart> Cart=new ArrayList<>();
+    List<cart> Cart1=new ArrayList<>();
     CartAdapter adapter;
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
@@ -88,8 +88,15 @@ public class GalleryFragment extends Fragment {
         return root;
     }
     public void loadCart() {
-        Cart=new Database(getContext()).getCarts();
-        adapter=new CartAdapter(Cart, (com.example.carbon.Cart) getContext());
-        recyclerView.setAdapter(adapter);
+//        String[] g=new String[2];
+//        Cart1=new Database(getContext()).getCarts();
+//        adapter=new CartAdapter(Cart1,);
+//        recyclerView.setAdapter(adapter);
+//        int t=0;
+//        for(cart a:Cart) {
+//            g = a.getPrice().split("T");
+//            t += (Integer.parseInt(g[0]))*(Integer.parseInt(a.getQuantity()));
+//        }
+//        Total.setText(String.valueOf(t)+"Tk");
     }
 }

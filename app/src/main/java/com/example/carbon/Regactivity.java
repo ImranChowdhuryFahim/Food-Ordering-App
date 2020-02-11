@@ -113,12 +113,10 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("user");
         User u=new User(Name,Gender,user.getPhoneNumber(),pass);
-
        //Toast.makeText(Regactivity.this,u.getGender(),Toast.LENGTH_SHORT).show();
         myRef.child(user.getUid()).setValue(u);
         Intent intent=new Intent(Regactivity.this,home.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        finishAffinity();
         startActivity(intent);
       //startActivity(new Intent(Regactivity.this, home.class));
 

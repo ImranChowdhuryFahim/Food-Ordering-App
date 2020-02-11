@@ -39,6 +39,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private ProgressDialog dial;
     private static String verid=null;
     int flag=0;
+    public String rs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +100,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
 
         String phoneNumber=getIntent().getStringExtra("pn");
+        rs=getIntent().getStringExtra("rs");
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
@@ -156,11 +158,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             dial.dismiss();
                             //FirebaseUser user = task.getResult().getUser();
-                            //Toast.makeText(Login.this,"successfull",Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(Login.this,Regactivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+                            if(rs.equals("123")){
+                                Intent intent=new Intent(Login.this,home.class);
+                                finishAffinity();
+                                startActivity(intent);
+                            }
+                            else {
+                                //Toast.makeText(Login.this,rs,Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Login.this, Regactivity.class);
+                                finishAffinity();
+                                startActivity(intent);
+                            }
                             //startActivity(new Intent(Login.this, Regactivity.class));
                             // ...
                         } else {
