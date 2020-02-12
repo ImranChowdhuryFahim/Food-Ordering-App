@@ -3,12 +3,15 @@ package com.example.carbon;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +46,7 @@ public class Cart extends AppCompatActivity {
     String total=null;
     private FirebaseUser user;
     private FirebaseAuth auth;
+    int o=0;
     Database mydb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class Cart extends AppCompatActivity {
         Order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mydb!=null) {
+                if (home.or>0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this);
                     builder.setTitle("One more step");
                     builder.setIcon(R.drawable.ic_shopping_cart_black_24dp);
@@ -93,7 +97,7 @@ public class Cart extends AppCompatActivity {
                     });
                     builder.create();
                     builder.show();
-
+                    home.or=0;
                 }
                 else {
                     Toasty.warning(Cart.this,"There is no food to order",Toast.LENGTH_SHORT,true).show();
@@ -115,4 +119,6 @@ public class Cart extends AppCompatActivity {
         }
         Total.setText(String.valueOf(t)+"Tk");
     }
+
+
 }

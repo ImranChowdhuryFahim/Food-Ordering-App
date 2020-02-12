@@ -52,6 +52,7 @@ public class home extends AppCompatActivity {
     TextView text;
     CounterFab fab;
     Database mydb;
+    public static int or;
     public static int close=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class home extends AppCompatActivity {
             }
         });
         fab.setCount(mydb.numberOfRows());
+        or=fab.getCount();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -130,6 +132,7 @@ public class home extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         fab.setCount(mydb.numberOfRows());
+        or=fab.getCount();
 
     }
 
