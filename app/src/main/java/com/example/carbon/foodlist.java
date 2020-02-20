@@ -85,9 +85,10 @@ public class foodlist extends AppCompatActivity {
     }
 
     private void showlist() {
+        Query firebasesearchquery=reference.orderByChild("searchname");
         FirebaseRecyclerOptions options=
                 new FirebaseRecyclerOptions.Builder<food>()
-                        .setQuery(reference, food.class).build();
+                        .setQuery(firebasesearchquery, food.class).build();
 
         adapter = new FirebaseRecyclerAdapter<food, CatagoryViewHolder>(options) {
             @Override
@@ -127,8 +128,9 @@ public class foodlist extends AppCompatActivity {
 
     private void FirebaseSearch(String srchtxt)
     {
-        String query=srchtxt;
-        Query firebasesearchquery=reference.orderByChild("Name").startAt(query).endAt(query + "\uf8ff");
+
+        String query=srchtxt.toLowerCase();
+        Query firebasesearchquery=reference.orderByChild("searchname").startAt(query).endAt(query + "\uf8ff");
         FirebaseRecyclerOptions options=new FirebaseRecyclerOptions.Builder<food>().setQuery(firebasesearchquery,food.class).build();
         adapter=new FirebaseRecyclerAdapter<food, CatagoryViewHolder>(options) {
             @Override
