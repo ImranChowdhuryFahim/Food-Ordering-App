@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -30,6 +32,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 
 public class foodlist extends AppCompatActivity {
@@ -43,6 +48,7 @@ public class foodlist extends AppCompatActivity {
     androidx.appcompat.widget.Toolbar toolbar;
     Window window;
     CounterFab fab;
+    private StorageReference mStorageRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,7 @@ public class foodlist extends AppCompatActivity {
             type = val;
             getSupportActionBar().setTitle(type+" "+"Items");
         }
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         database = FirebaseDatabase.getInstance();
         reference= database.getReference(type);
         reference.keepSynced(true);
@@ -95,6 +102,7 @@ public class foodlist extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull CatagoryViewHolder catagoryViewHolder, int i, @NonNull final food food) {
                 catagoryViewHolder.name.setText(food.getName());
                 catagoryViewHolder.price.setText(food.getPrice());
+                Picasso.get().load(food.getImage()).into(catagoryViewHolder.imageView);
                 catagoryViewHolder.cart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -137,6 +145,7 @@ public class foodlist extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull CatagoryViewHolder catagoryViewHolder, int i, @NonNull final food food) {
                 catagoryViewHolder.name.setText(food.getName());
                 catagoryViewHolder.price.setText(food.getPrice());
+                Picasso.get().load(food.getImage()).into(catagoryViewHolder.imageView);
                 catagoryViewHolder.cart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

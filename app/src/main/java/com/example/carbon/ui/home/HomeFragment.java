@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent signin = new Intent(getContext(),foodlist.class);
-                signin.putExtra("key","Chineses");
+                signin.putExtra("key","Chinese");
                 startActivity(signin);
 
             }
