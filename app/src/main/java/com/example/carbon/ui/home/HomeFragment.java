@@ -17,9 +17,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.carbon.Menu;
 import com.example.carbon.R;
 import com.example.carbon.foodlist;
+import com.example.carbon.setfoodlist;
 
 public class HomeFragment extends Fragment {
-    ImageView ben,ind,chin,drk,fast,des;
+    ImageView ben,ind,chin,drk,fast,des,setmenu,kabab,more;
 
 
 
@@ -33,6 +34,9 @@ public class HomeFragment extends Fragment {
         drk= (ImageView) root.findViewById(R.id.drn1);
         fast= (ImageView) root.findViewById(R.id.fst1);
         des= (ImageView) root.findViewById(R.id.des1);
+        setmenu=(ImageView)root.findViewById(R.id.setmenu);
+        kabab=(ImageView)root.findViewById(R.id.kabab);
+        more=(ImageView)root.findViewById(R.id.more);
         ben.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +89,30 @@ public class HomeFragment extends Fragment {
                 signin.putExtra("key","Dessert");
                 startActivity(signin);
 
+            }
+        });
+        setmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signin = new Intent(getContext(),setfoodlist.class);
+                signin.putExtra("key","Setmenu");
+                startActivity(signin);
+            }
+        });
+        kabab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signin = new Intent(getContext(),foodlist.class);
+                signin.putExtra("key","Kabab");
+                startActivity(signin);
+            }
+        });
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signin = new Intent(getContext(),foodlist.class);
+                signin.putExtra("key","More");
+                startActivity(signin);
             }
         });
         return root;

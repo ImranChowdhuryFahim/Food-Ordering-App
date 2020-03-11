@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="Enter Your Phone number"
-            android:inputType="textEmailAddress"
+            android:inputType="number"
             android:textColorHint="#ffffff">
 
         </EditText>

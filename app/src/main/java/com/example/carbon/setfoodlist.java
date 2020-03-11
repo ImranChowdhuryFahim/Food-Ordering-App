@@ -38,7 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 
-public class foodlist extends AppCompatActivity {
+public class setfoodlist extends AppCompatActivity {
     RecyclerView recycle;
     RecyclerView.LayoutManager layoutManager;
     FirebaseRecyclerAdapter<food, CatagoryViewHolder> adapter;
@@ -111,6 +111,7 @@ public class foodlist extends AppCompatActivity {
                 }
                 catagoryViewHolder.name.setText(food.getName());
                 catagoryViewHolder.price.setText(food.getPrice());
+                catagoryViewHolder.dtsa.setText(food.getFooddtails());
                 Picasso.get().load(food.getImage()).into(catagoryViewHolder.imageView);
                 catagoryViewHolder.cart.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -124,10 +125,10 @@ public class foodlist extends AppCompatActivity {
                             ));
                             fab.setCount(mydb.numberOfRows());
                             home.or = fab.getCount();
-                            Toast.makeText(foodlist.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(setfoodlist.this, "Added to Cart", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(foodlist.this,"Not Available",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(setfoodlist.this,"Not Available",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -137,7 +138,7 @@ public class foodlist extends AppCompatActivity {
             @Override
             public CatagoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.foodlist,parent,false);
+                        .inflate(R.layout.foodlist1,parent,false);
                 return new CatagoryViewHolder(view);
             }
         };
@@ -171,7 +172,7 @@ public class foodlist extends AppCompatActivity {
                         ));
                         fab.setCount(mydb.numberOfRows());
                         home.or=fab.getCount();
-                        Toast.makeText(foodlist.this,"Added to Cart",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(setfoodlist.this,"Added to Cart",Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -180,7 +181,7 @@ public class foodlist extends AppCompatActivity {
             @Override
             public CatagoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.foodlist,parent,false);
+                        .inflate(R.layout.foodlist1,parent,false);
                 CatagoryViewHolder catagoryViewHolder=new CatagoryViewHolder(view);
                 return catagoryViewHolder;
             }
