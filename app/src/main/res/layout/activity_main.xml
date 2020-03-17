@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/bg">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,16 +13,32 @@
         android:layout_centerVertical="false"
         android:orientation="vertical">
 
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical"
+            android:background="@drawable/waves"
+            ></LinearLayout>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="   May I ask your phone number?"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textColor="@color/colorPrimary" />
         <EditText
             android:textSize="20sp"
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Enter Your Phone number"
+            android:hint=" Enter Your Phone number"
             android:inputType="number"
-            android:textColorHint="#ffffff">
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableLeft="@drawable/ic_call_blue_24dp">
+
 
         </EditText>
 
@@ -32,7 +48,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="Next"
-            android:background="@color/fui_bgGoogle"></Button>
+            android:background="@drawable/buttonstyle"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            ></Button>
 
     </LinearLayout>
 

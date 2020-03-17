@@ -86,6 +86,7 @@ public class foodlist extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getBaseContext(),Cart.class));
+                finish();
             }
         });
         fab.setCount(mydb.numberOfRows());
@@ -156,6 +157,14 @@ public class foodlist extends AppCompatActivity {
         adapter=new FirebaseRecyclerAdapter<food, CatagoryViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CatagoryViewHolder catagoryViewHolder, int i, @NonNull final food food) {
+                if(food.getStatus().equals("1"))
+                {
+                    catagoryViewHolder.avl.setText("Available");
+                    catagoryViewHolder.avl.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.avl));
+                }
+                else {
+                    catagoryViewHolder.avl.setText("Not Avilable");
+                }
                 catagoryViewHolder.name.setText(food.getName());
                 catagoryViewHolder.price.setText(food.getPrice());
                 Picasso.get().load(food.getImage()).into(catagoryViewHolder.imageView);

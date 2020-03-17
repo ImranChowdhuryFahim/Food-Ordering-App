@@ -18,11 +18,17 @@ import com.example.carbon.Menu;
 import com.example.carbon.R;
 import com.example.carbon.foodlist;
 import com.example.carbon.setfoodlist;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeFragment extends Fragment {
-    ImageView ben,ind,chin,drk,fast,des,setmenu,kabab,more;
-
-
+    ImageView ben,ind,chin,drk,fast,des,setmenu,kabab,allitm;
+    FirebaseDatabase database;
+    DatabaseReference databaseReference;
+    TextView post;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,8 +41,38 @@ public class HomeFragment extends Fragment {
         fast= (ImageView) root.findViewById(R.id.fst1);
         des= (ImageView) root.findViewById(R.id.des1);
         setmenu=(ImageView)root.findViewById(R.id.setmenu);
-        kabab=(ImageView)root.findViewById(R.id.kabab);
-        more=(ImageView)root.findViewById(R.id.more);
+        kabab=(ImageView)root.findViewById(R.id.kebab);
+        post=(TextView)root.findViewById(R.id.movingtext);
+        database= FirebaseDatabase.getInstance();
+        databaseReference=database.getReference("offer post");
+        post.setSelected(true);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String p=dataSnapshot.child("1").getValue().toString();
+                post.setText(p);
+                post.setSelected(true);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        allitm = root.findViewById(R.id.alitm);
+
+        // all button
+        allitm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent signin = new Intent(getContext(),foodlist.class);
+                signin.putExtra("key","All");
+                startActivity(signin);
+            }
+        });
+
         ben.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,14 +140,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent signin = new Intent(getContext(),foodlist.class);
                 signin.putExtra("key","Kabab");
-                startActivity(signin);
-            }
-        });
-        more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signin = new Intent(getContext(),foodlist.class);
-                signin.putExtra("key","More");
                 startActivity(signin);
             }
         });

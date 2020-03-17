@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -33,9 +34,9 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
-     private Button Next;
-     private EditText pass;
-     FirebaseAuth auth;
+    private Button Next;
+    private Pinview pass;
+    FirebaseAuth auth;
     private ProgressDialog dial;
     private static String verid=null;
     int flag=0;
@@ -47,31 +48,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
         Next=(Button)findViewById(R.id.next);
         dial=new ProgressDialog(this);
-        pass=(EditText)findViewById(R.id.otp);
-        pass.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count==6)
-                {
-                    Next.setBackgroundColor(Color.GREEN);
-                }
-                else
-                {
-                    Next.setBackgroundColor(getResources().getColor(R.color.fui_bgGoogle));
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        pass=(Pinview) findViewById(R.id.otp);
         Next.setOnClickListener(this);
         next();
     }
@@ -85,9 +62,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         if(flag==1)
         {
-            if(pass.getText().length()>=1)
+            if(pass.getValue().length()>=1)
             {
-                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verid, pass.getText().toString());
+                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verid, pass.getValue().toString());
                 signInWithPhoneAuthCredential(credential);
             }
         }
@@ -98,7 +75,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(this,"Please Check Your Internet Connection",Toast.LENGTH_SHORT).show();
             return;
         }
-
         String phoneNumber=getIntent().getStringExtra("pn");
         rs=getIntent().getStringExtra("rs");
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -115,10 +91,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         public void onVerificationCompleted(PhoneAuthCredential credential) {
 
-           // Toast.makeText(Login.this,"sent",Toast.LENGTH_SHORT).show();
-            dial.setMessage("Verifying...");
-            dial.show();
-            signInWithPhoneAuthCredential(credential);
+            // Toast.makeText(Login.this,"sent",Toast.LENGTH_SHORT).show();
+
+            if(credential.getSmsCode()!=null) {
+                pass.setValue(String.valueOf(credential.getSmsCode()));
+                dial.setMessage("Please Wait...");
+                dial.show();
+                signInWithPhoneAuthCredential(credential);
+            }
+            else {
+                dial.setMessage("Verifying...");
+                dial.show();
+                signInWithPhoneAuthCredential(credential);
+            }
+
 
         }
 
@@ -148,7 +134,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         }
     };
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+    private void signInWithPhoneAuthCredential(final PhoneAuthCredential credential) {
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -156,17 +142,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
 
-                            dial.dismiss();
                             //FirebaseUser user = task.getResult().getUser();
+
                             if(rs.equals("123")){
+                                dial.dismiss();
                                 Intent intent=new Intent(Login.this,home.class);
                                 finishAffinity();
                                 startActivity(intent);
                             }
                             else {
+                                dial.dismiss();
                                 //Toast.makeText(Login.this,rs,Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, Regactivity.class);
-                                finishAffinity();
                                 startActivity(intent);
                             }
                             //startActivity(new Intent(Login.this, Regactivity.class));
@@ -186,9 +173,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v==Next)
-            {
+        {
             next();
         }
 
     }
 }
+
+

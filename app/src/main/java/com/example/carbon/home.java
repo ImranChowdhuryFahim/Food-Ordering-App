@@ -39,6 +39,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class home extends AppCompatActivity {
     Database mydb;
     public static int or;
     public static int close=0;
+    ImageView userimag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         auth=FirebaseAuth.getInstance();
@@ -64,6 +66,7 @@ public class home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         mydb=new Database(this);
         fab =(CounterFab) findViewById(R.id.counter_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -103,10 +106,15 @@ public class home extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         View headerView=navigationView.getHeaderView(0);
         text=(TextView)headerView.findViewById(R.id.userphoto);
+        userimag=(ImageView)headerView.findViewById(R.id.imageView);
         database.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                    String g=dataSnapshot.child(user.getUid()).child("gender").getValue().toString();
+                    if(g.equals("Female"))
+                    {
+                        userimag.setImageDrawable(getResources().getDrawable(R.drawable.favatar));
+                    }
                     name = dataSnapshot.child(user.getUid().toString()).child("name").getValue().toString();
                     text.setText(name);
                 }

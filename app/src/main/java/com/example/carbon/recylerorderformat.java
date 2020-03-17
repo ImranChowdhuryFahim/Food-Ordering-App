@@ -4,24 +4,24 @@ import com.example.carbon.Model.cart;
 
 import java.util.List;
 
-public class orderFormat {
+public class recylerorderformat {
     private String key;
     private String phoneNumber;
     private String Adress;
     private String Total;
     private List<cart> Cart;
-    private List<String> status;
 
-    public orderFormat() {
+
+    public recylerorderformat() {
     }
 
-    public orderFormat(String key, String phoneNumber, String adress, String total, List<cart> cart, List<String> status) {
+    public recylerorderformat(String key, String phoneNumber, String adress, String total, List<cart> cart) {
         this.key = key;
         this.phoneNumber = phoneNumber;
         Adress = adress;
         Total = total;
         Cart = cart;
-        this.status = status;
+
     }
 
     public String getKey() {
@@ -64,11 +64,4 @@ public class orderFormat {
         Cart = cart;
     }
 
-    public List<String> getStatus() {
-        return status;
-    }
-
-    public void setStatus(List<String> status) {
-        this.status = status;
-    }
 }

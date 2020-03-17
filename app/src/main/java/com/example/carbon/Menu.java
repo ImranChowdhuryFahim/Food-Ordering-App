@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class Menu extends AppCompatActivity {
-    ImageView ben,ind,chin,drk,fast,des;
+    ImageView ben,ind,chin,drk,fast,des,allitm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +20,7 @@ public class Menu extends AppCompatActivity {
         drk= this.<ImageView>findViewById(R.id.drn1);
         fast= this.<ImageView>findViewById(R.id.fst1);
         des= this.<ImageView>findViewById(R.id.des1);
+
         ben.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

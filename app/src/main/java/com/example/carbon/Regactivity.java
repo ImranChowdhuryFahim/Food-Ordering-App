@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +34,7 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
     private EditText Cpass;
     FirebaseAuth auth;
     FirebaseUser user;
+    private RadioGroup rdg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,29 +47,7 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         Female=(RadioButton)findViewById(R.id.female);
         Pass=(EditText)findViewById(R.id.pass);
         Cpass=(EditText)findViewById(R.id.cpass);
-        Cpass.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(TextUtils.isEmpty(Pass.getText()) && (Pass.getText()==Cpass.getText()) )
-                {
-                    Register.setBackgroundColor(Color.GREEN);
-                }
-                else {
-                    Register.setBackgroundColor(getResources().getColor(R.color.fui_bgGoogle));
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        rdg=(RadioGroup)findViewById(R.id.radioGroup1);
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
         Register.setOnClickListener(this);
@@ -87,37 +67,29 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(this,"Please Check Your Internet Connection",Toast.LENGTH_SHORT).show();
             return;
         }
-        String Gender=null;
         String Name=Fname.getText().toString().trim()+" "+Lname.getText().toString().trim();
-        if(Male.isChecked())
-        {
-            Gender="Male";
-        }
-        else if(Female.isChecked())
-        {
-            Gender="Female";
-        }
+        int selectedId = rdg.getCheckedRadioButtonId();
+        RadioButton radioButton = (RadioButton) findViewById(selectedId);
         String pass=Pass.getText().toString().trim();
         String cpass=Cpass.getText().toString().trim();
         if(TextUtils.isEmpty(pass))
         {
-            Toast.makeText(Regactivity.this,"Please Enter a password",Toast.LENGTH_SHORT).show();
+            Pass.setError("Password can't be null");
             return;
         }
         if(!pass.equals(cpass))
         {
-            Toast.makeText(Regactivity.this,"Password didn't match",Toast.LENGTH_SHORT).show();
+            Cpass.setError("Password didn't match");
             return;
         }
-        Register.setBackgroundColor(Color.GREEN);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("user");
-        User u=new User(Name,Gender,user.getPhoneNumber(),pass);
+        User u=new User(Name,radioButton.getText().toString(),user.getPhoneNumber(),pass);
        //Toast.makeText(Regactivity.this,u.getGender(),Toast.LENGTH_SHORT).show();
         myRef.child(user.getUid()).setValue(u);
         Intent intent=new Intent(Regactivity.this,home.class);
-        finishAffinity();
         startActivity(intent);
+        finish();
       //startActivity(new Intent(Regactivity.this, home.class));
 
     }

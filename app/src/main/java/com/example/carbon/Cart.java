@@ -86,7 +86,9 @@ public class Cart extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String k = String.valueOf(System.currentTimeMillis());
-                            orderFormat ord = new orderFormat(k, user.getPhoneNumber().toString(), adress.getText().toString(), Total.getText().toString(), Cart, "1");
+                            List<String> s=new ArrayList<String>();
+                            s.add("0");
+                            orderFormat ord = new orderFormat(k, user.getPhoneNumber().toString(), adress.getText().toString(), Total.getText().toString(), Cart, s);
                             databaseReference.child(k).setValue(ord);
                             new Database(getApplicationContext()).cleanCart();
                             Toasty.success(Cart.this, "Your Order Have been Placed",
