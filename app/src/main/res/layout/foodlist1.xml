@@ -57,7 +57,7 @@
                 android:id="@+id/avl"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical|start"
-                android:textColor="@color/fui_bgEmail"></TextView>
+                android:textColor="#BF360C"></TextView>
 
             <Button
                 android:id="@+id/cart"

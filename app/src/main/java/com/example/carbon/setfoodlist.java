@@ -159,6 +159,7 @@ public class setfoodlist extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull CatagoryViewHolder catagoryViewHolder, int i, @NonNull final food food) {
                 catagoryViewHolder.name.setText(food.getName());
                 catagoryViewHolder.price.setText(food.getPrice());
+                catagoryViewHolder.dtsa.setText(food.getFooddtails());
                 Picasso.get().load(food.getImage()).into(catagoryViewHolder.imageView);
                 catagoryViewHolder.cart.setOnClickListener(new View.OnClickListener() {
                     @Override
