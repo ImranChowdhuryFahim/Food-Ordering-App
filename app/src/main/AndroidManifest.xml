@@ -37,8 +37,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UserLogin" />
-        <activity android:name=".Regactivity" />
-        <activity android:name=".Login" />
+        <activity android:name=".Regactivity"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity android:name=".Login"
+            />
         <activity android:name=".welcomepage" />
         <activity android:name=".MainActivity">
             <intent-filter>

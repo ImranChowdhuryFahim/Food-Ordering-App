@@ -37,6 +37,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class foodlist extends AppCompatActivity {
     RecyclerView recycle;
@@ -128,7 +130,7 @@ public class foodlist extends AppCompatActivity {
                             Toast.makeText(foodlist.this, "Added to Cart", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(foodlist.this,"Not Available",Toast.LENGTH_SHORT).show();
+                            Toasty.info(foodlist.this,"Not Available",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

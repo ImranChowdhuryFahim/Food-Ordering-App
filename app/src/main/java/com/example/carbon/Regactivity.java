@@ -19,6 +19,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +37,7 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
     FirebaseAuth auth;
     FirebaseUser user;
     private RadioGroup rdg;
+    private ProgressDialog dial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         rdg=(RadioGroup)findViewById(R.id.radioGroup1);
         auth=FirebaseAuth.getInstance();
         user=auth.getCurrentUser();
+        dial=new ProgressDialog(this);
         Register.setOnClickListener(this);
 
     }
@@ -72,6 +76,16 @@ public class Regactivity extends AppCompatActivity implements View.OnClickListen
         RadioButton radioButton = (RadioButton) findViewById(selectedId);
         String pass=Pass.getText().toString().trim();
         String cpass=Cpass.getText().toString().trim();
+        if(TextUtils.isEmpty((Fname.getText())))
+        {
+            Fname.setError("First name can't be null");
+            return;
+        }
+        if(TextUtils.isEmpty(Lname.getText()))
+        {
+            Lname.setError("Last name can't be null");
+            return;
+        }
         if(TextUtils.isEmpty(pass))
         {
             Pass.setError("Password can't be null");

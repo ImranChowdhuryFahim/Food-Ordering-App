@@ -146,7 +146,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             if(rs.equals("123")){
                                 dial.dismiss();
-                                Intent intent=new Intent(Login.this,home.class);
+                                Intent intent=new Intent(Login.this,Regactivity.class);
                                 finishAffinity();
                                 startActivity(intent);
                             }

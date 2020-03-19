@@ -34,10 +34,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint=" Enter Your Phone number"
-            android:inputType="number"
+            android:hint="Enter Your Phone number"
+            android:inputType="phone"
             android:backgroundTint="@color/colorPrimary"
-            android:drawableLeft="@drawable/ic_call_blue_24dp">
+            android:drawableLeft="@drawable/ic_call_blue_24dp"
+            android:drawablePadding="8dp">
 
 
         </EditText>
@@ -51,7 +52,6 @@
             android:background="@drawable/buttonstyle"
             android:backgroundTint="@color/colorPrimaryDark"
             android:textAllCaps="false"
-            android:textSize="18sp"
             ></Button>
 
     </LinearLayout>

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Regactivity">
+    android:fitsSystemWindows="true"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,10 +41,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:inputType="textPersonName"
             android:hint="Enter Your First Name"
             android:backgroundTint="@color/colorPrimaryDark"
             >
         </EditText>
+
 
         <EditText
             android:id="@+id/lname"
@@ -49,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:inputType="textPersonName"
             android:hint="Enter Your Last Name"
             android:backgroundTint="@color/colorPrimaryDark"
             >
@@ -69,6 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
             >
             <RadioButton
                 android:layout_width="match_parent"
@@ -116,3 +123,4 @@
     </LinearLayout>
 
 </RelativeLayout>
+</ScrollView>

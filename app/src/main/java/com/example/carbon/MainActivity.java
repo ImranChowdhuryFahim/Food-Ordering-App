@@ -79,30 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setContentView(R.layout.activity_main);
                 Next=(Button) findViewById(R.id.next);
                 number=(EditText)findViewById(R.id.phone);
-                number.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    Color c;
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if(count>=11)
-                        {
-                            Next.setBackgroundColor(Color.GREEN);
-                        }
-                        else {
-                            Next.setBackgroundColor(getResources().getColor(R.color.fui_bgGoogle));
-                        }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         Next.setOnClickListener(this);
         database=FirebaseDatabase.getInstance().getReference("user");
         database.addValueEventListener(new ValueEventListener() {
