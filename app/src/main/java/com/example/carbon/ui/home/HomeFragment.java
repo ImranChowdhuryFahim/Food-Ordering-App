@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.andremion.counterfab.CounterFab;
 import com.example.carbon.Menu;
 import com.example.carbon.R;
 import com.example.carbon.foodlist;
@@ -29,11 +30,14 @@ public class HomeFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference databaseReference;
     TextView post;
+    public CounterFab fab;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
+        fab=(CounterFab)getActivity().findViewById(R.id.counter_fab);
+        fab.setVisibility(View.VISIBLE);
         ben= (ImageView) root.findViewById(R.id.ben1);
         ind= (ImageView) root.findViewById(R.id.ind1);
         chin= (ImageView) root.findViewById(R.id.chin2);

@@ -27,8 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:outlineAmbientShadowColor="@color/colorPrimaryDark"
         app:badgeBackgroundColor="@color/fui_bgEmail"
         android:src="@drawable/ic_shopping_cart_black_24dp" />
 

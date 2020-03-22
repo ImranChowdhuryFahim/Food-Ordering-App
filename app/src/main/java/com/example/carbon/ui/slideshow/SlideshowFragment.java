@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.andremion.counterfab.CounterFab;
 import com.example.carbon.Model.cart;
 import com.example.carbon.R;
 import com.example.carbon.Recyclerviewholder;
@@ -42,6 +43,7 @@ public class SlideshowFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseUser user;
     public String pnum;
+    public CounterFab fab;
 
     @Override
     public void onStart() {
@@ -58,6 +60,8 @@ public class SlideshowFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        fab=(CounterFab)getActivity().findViewById(R.id.counter_fab);
+        fab.setVisibility(View.INVISIBLE);
         recyclerView = (RecyclerView) root.findViewById(R.id.recylerview);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
