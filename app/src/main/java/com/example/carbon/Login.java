@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
@@ -77,12 +78,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
         String phoneNumber=getIntent().getStringExtra("pn");
         rs=getIntent().getStringExtra("rs");
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phoneNumber,        // Phone number to verify
-                60,                 // Timeout duration
-                TimeUnit.SECONDS,   // Unit of timeout
-                this,               // Activity (for callback binding)
-                mCallbacks);        // OnVerificationStateChangedCallbacks
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(auth)
+                        .setPhoneNumber(phoneNumber)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this)                 // Activity (for callback binding)
+                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
 
     }
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks()
@@ -130,7 +133,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                @NonNull PhoneAuthProvider.ForceResendingToken token) {
             verid=verificationId;
 
-            //Toast.makeText(Login.this,"pataisi",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this,"pataisi",Toast.LENGTH_SHORT).show();
 
         }
     };
@@ -146,7 +149,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                             if(rs.equals("123")){
                                 dial.dismiss();
-                                Intent intent=new Intent(Login.this,Regactivity.class);
+                                Intent intent=new Intent(Login.this,home.class);
                                 finishAffinity();
                                 startActivity(intent);
                             }
